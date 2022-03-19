@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS pats_db;
+CREATE DATABASE pats_db;
+USE pats_db;
