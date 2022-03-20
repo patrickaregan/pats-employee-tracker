@@ -18,3 +18,13 @@ VALUES
     ('Lawyer', 95000.00, 4),
     ('Salesperson', 70000.00, 5),
     ('Developer', 100000.00, 6);
+
+INSERT INTO employee
+    (first_name, last_name, role_id)
+VALUES
+    ('George', 'Washington', 2),
+    ('Thomas', 'Jefferson', 6),
+    ('John', 'Adams', 4),
+    ('Chester', 'Arthur', 6),
+    ('Abraham', 'Lincoln', 3),
+    ('Ronald', 'Regan', 1);

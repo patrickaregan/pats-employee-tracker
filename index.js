@@ -1,45 +1,63 @@
-const greeting = require('./utils/sayHello');
+// Create global variables
+const inquirer = require("inquirer");
 const db = require('./db/connection');
+const getDepartments = require('./utils/getDepartments');
+const getRoles = require('./utils/getRoles');
+const getEmployees = require('./utils/getEmployees');
+let option = "0";
 
-// Display greeting after connecting to db
+// Connect to database
 db.connect(err => {
     if (err) throw err;
-    console.log(greeting());
 })
 
-// Function to get departments
-const getDepartments = () => {
-    const sql = "SELECT * FROM department";
-    db.query (sql, (err, rows) => {
-        if (err) {
-            console.log("Error getting Departments");
-            return;
+// Array of questions
+const questions = [
+    {
+        type: "list",
+        name: "choice",
+        message: "What would you like to do?",
+        choices: [
+            "1. View All Departments",
+            "2. View All Roles",
+            "3. View All Employees",
+            "9. Quit",
+        ],
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
         }
-        console.log(rows);
-        return;
-    })
+    }
+]
+
+const promptUser = () => {
+    inquirer.prompt(questions).then((answers) => {
+        option = answers.choice.split(". ")[0];
+        switch (option) {
+            case "1":
+                getDepartments(db);
+                break;
+            case "2":
+                getRoles(db);
+                break;
+            case "3":
+                getEmployees(db);
+                break;
+            case "9":
+                console.log("Quitting!");
+                break;
+        }
+        if (option === "9") {
+            process.exit();
+        } else {
+            let timeoutID = setTimeout(promptUser, 500);
+        }
+    });
 }
 
-// Function to get departments
-const getRoles = () => {
-    const sql = "select name, title, salary from department left join role on department.id = role.department_id";
-    db.query (sql, (err, rows) => {
-        if (err) {
-            console.log("Error getting Roles");
-            return;
-        }
-        console.log(rows);
-        return;
-    })
-}
-
-getDepartments();
-getRoles();
-
-
-
-
-
-
-
+promptUser();
 
