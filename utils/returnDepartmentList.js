@@ -4,6 +4,7 @@ const returnDepartmentList = (db) => {
     db.query (sql, (err, rows) => {
         if (err) {
             console.log("Error getting Departments");
+            console.log(err);
             return;
         }
         rows.forEach(element => {

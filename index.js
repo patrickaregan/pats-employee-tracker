@@ -107,22 +107,28 @@ const roleSalaryQuestion = [
 ]
 
 // Role Department question
-const roleDepartmentQuestion = [
-    {
-        type: "list",
-        name: "choice",
-        message: "Which department does the role belong to?",
-        choices: returnDepartmentList(db),
-        validate: input => {
-            if (input) {
-                return true;
-            } else {
-                console.log("This is a required field!");
-                return false;
+var roleDepartmentQuestion = [];
+
+const setRoleDepartmentQuestion = () => {
+    roleDepartmentQuestion = [
+        {
+            type: "list",
+            name: "choice",
+            message: "Which department does the role belong to?",
+            choices: returnDepartmentList(db),
+            validate: input => {
+                if (input) {
+                    return true;
+                } else {
+                    console.log("This is a required field!");
+                    return false;
+                }
             }
         }
-    }
-]
+    ]
+}
+
+setRoleDepartmentQuestion();
 
 
 // **************************************************
@@ -166,6 +172,7 @@ const addDepartmentMenu = () => {
         const department_name = answers.choice.trim();
         addDepartment(db, department_name);
         setTimeout(optionsMenu, 500);
+        setRoleDepartmentQuestion();
     });
 }
 
@@ -177,6 +184,7 @@ const getRoleTitleMenu = () => {
     });
 }
 
+
 // Get Role Salary Menu
 const getRoleSalaryMenu = () => {
     inquirer.prompt(roleSalaryQuestion).then((answers) => {
@@ -185,7 +193,6 @@ const getRoleSalaryMenu = () => {
     });
 }
 
-// Get Role Department Menu
 const getRoleDepartmentMenu = () => {
     inquirer.prompt(roleDepartmentQuestion).then((answers) => {
         role_department_id = answers.choice.split(". ")[0];

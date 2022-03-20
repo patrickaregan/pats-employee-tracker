@@ -3,7 +3,6 @@ INSERT INTO department
     (name)
 VALUES
     ('Accounting'),
-    ('Finance'),
     ('Human Resources'),
     ('Legal'),
     ('Sales'),
@@ -13,21 +12,25 @@ INSERT INTO role
     (title, salary, department_id)
 VALUES
     ('Accountant',75000.00, 1),
-    ('CFO', 200000.00, 2),
-    ('HRBP', 75000.00, 3),
-    ('Lawyer', 95000.00, 4),
-    ('Salesperson', 70000.00, 5),
-    ('Developer', 100000.00, 6);
+    ('Recruiter', 70000.00, 2),
+    ('Lawyer', 95000.00, 3),
+    ('Salesperson', 65000.00, 4),
+    ('Developer', 100000.00, 5);
 
 INSERT INTO employee
     (first_name, last_name, role_id)
 VALUES
-    ('George', 'Washington', 2),
-    ('Thomas', 'Jefferson', 6),
-    ('John', 'Adams', 4),
-    ('Chester', 'Arthur', 6),
-    ('Abraham', 'Lincoln', 3),
-    ('Ronald', 'Regan', 1);
+    ('Martin', 'McFly', 1),
+    ('Harold', 'Crick', 1),
+    ('Jordan', 'Belfort', 2),
+    ('Daniel', 'Kaffee', 3),
+    ('James', 'McGill', 3),
+    ('Shelley', 'Levene', 4),
+    ('Thomas', 'Anderson', 5);
 
 UPDATE employee SET manager_id = 1 WHERE id = 2;
-UPDATE employee SET manager_id = 1 WHERE id = 3;
+UPDATE employee SET manager_id = 4 WHERE id = 5;
+
+-- Department to add: Executive
+-- Roles to add: CEO, CFO
+-- Employees to add: 
