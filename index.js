@@ -1,18 +1,28 @@
+// **************************************************
 // Create global variables
+// **************************************************
 const inquirer = require("inquirer");
 const db = require('./db/connection');
 const getDepartments = require('./utils/getDepartments');
+const addDepartment = require('./utils/addDepartment');
 const getRoles = require('./utils/getRoles');
 const getEmployees = require('./utils/getEmployees');
 let option = "0";
+let department_name = "";
 
-// Connect to database
+// **************************************************
+// Connect to the database
+// **************************************************
 db.connect(err => {
     if (err) throw err;
 })
 
-// Array of questions
-const options = [
+// **************************************************
+// Question arrays
+// **************************************************
+
+// Option questions
+const optionQuestions = [
     {
         type: "list",
         name: "choice",
@@ -25,7 +35,8 @@ const options = [
             "5. Add a Role",
             "6. Add an Employee",
             "7. Update and Employee Role",
-            "9. Quit",
+            "8. Quit",
+            new inquirer.Separator(),
         ],
         validate: input => {
             if (input) {
@@ -38,31 +49,57 @@ const options = [
     }
 ]
 
+// Deparement questions
+const departmentQuestions = [
+    {
+        type: "input",
+        name: "choice",
+        message: "What is the name of the Department?",
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
+        }
+    }
+]
+
 const optionsMenu = () => {
-    inquirer.prompt(options).then((answers) => {
+    inquirer.prompt(optionQuestions).then((answers) => {
         option = answers.choice.split(". ")[0];
         switch (option) {
             case "1":
                 getDepartments(db);
+                setTimeout(optionsMenu, 500);
                 break;
             case "2":
                 getRoles(db);
+                setTimeout(optionsMenu, 500);
                 break;
             case "3":
                 getEmployees(db);
+                setTimeout(optionsMenu, 500);
                 break;
             case "4":
-                // Add a Department
+                option = 4;
+                //console.log("\n");
+                addDepartmentMenu();
                 break;
-            case "9":
-                console.log("Quitting!");
+            case "8":
+                console.log("quitting...");
+                process.exit();
                 break;
         }
-        if (option === "9") {
-            process.exit();
-        } else {
-            let timeoutID = setTimeout(optionsMenu, 500);
-        }
+    });
+}
+
+const addDepartmentMenu = () => {
+    inquirer.prompt(departmentQuestions).then((answers) => {
+        department_name = answers.choice.trim();
+        addDepartment(db, department_name);
+        setTimeout(optionsMenu, 500);
     });
 }
 
