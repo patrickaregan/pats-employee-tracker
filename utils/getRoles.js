@@ -9,8 +9,8 @@ const getRoles = (db) => {
         console.log("Roles:");
         console.table(rows);
         console.log("\n");
-        return;
     })
+    return;
 }
 
 module.exports = getRoles;

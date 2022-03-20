@@ -9,8 +9,8 @@ const getDepartments = (db) => {
         console.log("Departments:");
         console.table(rows);
         console.log("\n");
-        return;
     })
+    return;
 }
 
 module.exports = getDepartments;

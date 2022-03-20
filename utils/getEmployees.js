@@ -19,8 +19,8 @@ const getEmployees = (db) => {
         console.log("Employees:");
         console.table(rows);
         console.log("\n");
-        return;
     })
+    return;
 }
 
 module.exports = getEmployees;

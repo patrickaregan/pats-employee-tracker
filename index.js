@@ -5,10 +5,15 @@ const inquirer = require("inquirer");
 const db = require('./db/connection');
 const getDepartments = require('./utils/getDepartments');
 const addDepartment = require('./utils/addDepartment');
+const returnDepartmentList = require('./utils/returnDepartmentList');
 const getRoles = require('./utils/getRoles');
+const addRole = require('./utils/addRole');
 const getEmployees = require('./utils/getEmployees');
-let option = "0";
-let department_name = "";
+const { conditionalExpression } = require("@babel/types");
+// variables for adding a role
+let role_title = "";
+let role_salary = "";
+let role_department_id = "";
 
 // **************************************************
 // Connect to the database
@@ -17,12 +22,13 @@ db.connect(err => {
     if (err) throw err;
 })
 
+
 // **************************************************
-// Question arrays
+// Menu questions
 // **************************************************
 
-// Option questions
-const optionQuestions = [
+// Options
+const optionQuestion = [
     {
         type: "list",
         name: "choice",
@@ -49,8 +55,8 @@ const optionQuestions = [
     }
 ]
 
-// Deparement questions
-const departmentQuestions = [
+// Department
+const departmentQuestion = [
     {
         type: "input",
         name: "choice",
@@ -66,9 +72,67 @@ const departmentQuestions = [
     }
 ]
 
+// Role Title
+const roleTitleQuestion = [
+    {
+        type: "input",
+        name: "choice",
+        message: "What is the name of the role?",
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
+        }
+    }
+]
+
+// Role Salary
+const roleSalaryQuestion = [
+    {
+        type: "input",
+        name: "choice",
+        message: "What is the salary of the role?",
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
+        }
+    }
+]
+
+// Role Department question
+const roleDepartmentQuestion = [
+    {
+        type: "list",
+        name: "choice",
+        message: "Which department does the role belong to?",
+        choices: returnDepartmentList(db),
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
+        }
+    }
+]
+
+
+// **************************************************
+// Menu functions
+// **************************************************
+
+// Options menu
 const optionsMenu = () => {
-    inquirer.prompt(optionQuestions).then((answers) => {
-        option = answers.choice.split(". ")[0];
+    inquirer.prompt(optionQuestion).then((answers) => {
+        const option = answers.choice.split(". ")[0];
         switch (option) {
             case "1":
                 getDepartments(db);
@@ -83,9 +147,10 @@ const optionsMenu = () => {
                 setTimeout(optionsMenu, 500);
                 break;
             case "4":
-                option = 4;
-                //console.log("\n");
                 addDepartmentMenu();
+                break;
+            case "5":
+                getRoleTitleMenu();
                 break;
             case "8":
                 console.log("quitting...");
@@ -95,13 +160,42 @@ const optionsMenu = () => {
     });
 }
 
+// Add Department Menu
 const addDepartmentMenu = () => {
-    inquirer.prompt(departmentQuestions).then((answers) => {
-        department_name = answers.choice.trim();
+    inquirer.prompt(departmentQuestion).then((answers) => {
+        const department_name = answers.choice.trim();
         addDepartment(db, department_name);
         setTimeout(optionsMenu, 500);
     });
 }
 
+// Get Role Title Menu
+const getRoleTitleMenu = () => {
+    inquirer.prompt(roleTitleQuestion).then((answers) => {
+        role_title = answers.choice.trim();
+        getRoleSalaryMenu();
+    });
+}
+
+// Get Role Salary Menu
+const getRoleSalaryMenu = () => {
+    inquirer.prompt(roleSalaryQuestion).then((answers) => {
+        role_salary = answers.choice.trim();
+        getRoleDepartmentMenu();
+    });
+}
+
+// Get Role Department Menu
+const getRoleDepartmentMenu = () => {
+    inquirer.prompt(roleDepartmentQuestion).then((answers) => {
+        role_department_id = answers.choice.split(". ")[0];
+        addRole(db, role_title, role_salary, role_department_id);
+        setTimeout(optionsMenu, 500);
+    });
+}
+
+// **************************************************
+// Start the application
+// **************************************************
 optionsMenu();
 
