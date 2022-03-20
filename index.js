@@ -12,7 +12,7 @@ db.connect(err => {
 })
 
 // Array of questions
-const questions = [
+const options = [
     {
         type: "list",
         name: "choice",
@@ -21,6 +21,10 @@ const questions = [
             "1. View All Departments",
             "2. View All Roles",
             "3. View All Employees",
+            "4. Add a Department",
+            "5. Add a Role",
+            "6. Add an Employee",
+            "7. Update and Employee Role",
             "9. Quit",
         ],
         validate: input => {
@@ -34,8 +38,8 @@ const questions = [
     }
 ]
 
-const promptUser = () => {
-    inquirer.prompt(questions).then((answers) => {
+const optionsMenu = () => {
+    inquirer.prompt(options).then((answers) => {
         option = answers.choice.split(". ")[0];
         switch (option) {
             case "1":
@@ -47,6 +51,9 @@ const promptUser = () => {
             case "3":
                 getEmployees(db);
                 break;
+            case "4":
+                // Add a Department
+                break;
             case "9":
                 console.log("Quitting!");
                 break;
@@ -54,10 +61,10 @@ const promptUser = () => {
         if (option === "9") {
             process.exit();
         } else {
-            let timeoutID = setTimeout(promptUser, 500);
+            let timeoutID = setTimeout(optionsMenu, 500);
         }
     });
 }
 
-promptUser();
+optionsMenu();
 

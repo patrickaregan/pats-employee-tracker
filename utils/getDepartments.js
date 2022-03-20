@@ -1,5 +1,5 @@
 const getDepartments = (db) => {
-    const sql = "SELECT * FROM department";
+    const sql = "SELECT id as ID, name as Department FROM department";
     db.query (sql, (err, rows) => {
         if (err) {
             console.log("Error getting Departments");

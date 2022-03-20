@@ -28,3 +28,6 @@ VALUES
     ('Chester', 'Arthur', 6),
     ('Abraham', 'Lincoln', 3),
     ('Ronald', 'Regan', 1);
+
+UPDATE employee SET manager_id = 1 WHERE id = 2;
+UPDATE employee SET manager_id = 1 WHERE id = 3;
