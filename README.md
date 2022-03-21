@@ -22,7 +22,7 @@
 
 ## Installation
 
-  - git clone https://github.com/patrickaregan/pats-employee-tracker.git.
+  - git clone https://github.com/patrickaregan/pats-employee-tracker.git
 
 ## Usage
 
