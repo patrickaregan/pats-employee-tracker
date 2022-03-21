@@ -410,5 +410,10 @@ const getUpdateEmployeeRoleMenu2 = () => {
 // **************************************************
 // Start the application
 // **************************************************
+console.log("\n\n");
+console.log("############################");
+console.log("## Pat's Employee Tracker ##");
+console.log("############################");
+console.log("\n");
 optionsMenu();
 

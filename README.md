@@ -29,7 +29,7 @@
   - In the root directory run "npm i" to install dependencies, then run "node index"
 
   ![Pat's Employee Tracker](images/screenshot.png)
-  - [Watch a demo video](TBD)
+  - [Watch a demo video](https://drive.google.com/file/d/1XD-FgAoh8MWD3IE57UQ7NlbLuZln1Bwm/view)
 
 ## License
 
