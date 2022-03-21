@@ -3,7 +3,7 @@ const addDepartment = (db, department_name) => {
     const params = [ department_name ]
     db.query (sql, params, (err, rows) => {
         if (err) {
-            console.log("Error adding Department");
+            console.log("Error adding Department!");
             return;
         }
         console.log("Department added successfully!");

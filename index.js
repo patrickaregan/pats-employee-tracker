@@ -8,12 +8,21 @@ const addDepartment = require('./utils/addDepartment');
 const returnDepartmentList = require('./utils/returnDepartmentList');
 const getRoles = require('./utils/getRoles');
 const addRole = require('./utils/addRole');
+const returnRoleList = require('./utils/returnRoleList');
 const getEmployees = require('./utils/getEmployees');
+const addEmployee = require('./utils/addEmployee');
+const returnEmployeeList = require('./utils/returnEmployeeList');
 const { conditionalExpression } = require("@babel/types");
 // variables for adding a role
 let role_title = "";
 let role_salary = "";
 let role_department_id = "";
+// variables for adding an employee
+let employee_fn = "";
+let employee_ln = "";
+let employee_role_id = "";
+let employee_manager_id = "";
+
 
 // **************************************************
 // Connect to the database
@@ -130,6 +139,89 @@ const setRoleDepartmentQuestion = () => {
 
 setRoleDepartmentQuestion();
 
+// Employee First Name
+const employeeFNQuestion = [
+    {
+        type: "input",
+        name: "choice",
+        message: "What is the employee's first name?",
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
+        }
+    }
+]
+
+// Employee Last Name
+const employeeLNQuestion = [
+    {
+        type: "input",
+        name: "choice",
+        message: "What is the employee's last name?",
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log("This is a required field!");
+                return false;
+            }
+        }
+    }
+]
+
+// Employee Role question
+var employeeRoleQuestion = [];
+
+const setEmployeeRoleQuestion = () => {
+    employeeRoleQuestion = [
+        {
+            type: "list",
+            name: "choice",
+            message: "What is the employee's role?",
+            choices: returnRoleList(db),
+            validate: input => {
+                if (input) {
+                    return true;
+                } else {
+                    console.log("This is a required field!");
+                    return false;
+                }
+            }
+        }
+    ]
+}
+
+setEmployeeRoleQuestion();
+
+// Employee Manager question
+var employeeManagerQuestion = [];
+
+const setEmployeeManagerQuestion = () => {
+    employeeManagerQuestion = [
+        {
+            type: "list",
+            name: "choice",
+            message: "Who is the employee's manager?",
+            choices: returnEmployeeList(db),
+            validate: input => {
+                if (input) {
+                    return true;
+                } else {
+                    console.log("This is a required field!");
+                    return false;
+                }
+            }
+        }
+    ]
+}
+
+setEmployeeManagerQuestion();
+
+
 
 // **************************************************
 // Menu functions
@@ -158,6 +250,9 @@ const optionsMenu = () => {
             case "5":
                 getRoleTitleMenu();
                 break;
+            case "6":
+                getEmployeeFNMenu();
+                break;
             case "8":
                 console.log("quitting...");
                 process.exit();
@@ -184,7 +279,6 @@ const getRoleTitleMenu = () => {
     });
 }
 
-
 // Get Role Salary Menu
 const getRoleSalaryMenu = () => {
     inquirer.prompt(roleSalaryQuestion).then((answers) => {
@@ -193,11 +287,47 @@ const getRoleSalaryMenu = () => {
     });
 }
 
+// Get Role Department Menu
 const getRoleDepartmentMenu = () => {
     inquirer.prompt(roleDepartmentQuestion).then((answers) => {
         role_department_id = answers.choice.split(". ")[0];
         addRole(db, role_title, role_salary, role_department_id);
         setTimeout(optionsMenu, 500);
+        setEmployeeRoleQuestion();
+    });
+}
+
+// Get Employee First Name Menu
+const getEmployeeFNMenu = () => {
+    inquirer.prompt(employeeFNQuestion).then((answers) => {
+        employee_fn = answers.choice.trim();
+        getEmployeeLNMenu();
+    });
+}
+
+// Get Employee Last Name Menu
+const getEmployeeLNMenu = () => {
+    inquirer.prompt(employeeLNQuestion).then((answers) => {
+        employee_ln = answers.choice.trim();
+        getEmployeeRoleMenu();
+    });
+}
+
+// Get Employee Role Menu
+const getEmployeeRoleMenu = () => {
+    inquirer.prompt(employeeRoleQuestion).then((answers) => {
+        employee_role_id = answers.choice.split(". ")[0];
+        getEmployeeManagerMenu();
+    });
+}
+
+// Get Employee Manager Menu
+const getEmployeeManagerMenu = () => {
+    inquirer.prompt(employeeManagerQuestion).then((answers) => {
+        employee_manager_id = answers.choice.split(". ")[0];
+        addEmployee(db, employee_fn, employee_ln, employee_role_id, employee_manager_id);
+        setTimeout(optionsMenu, 500);
+        setEmployeeManagerQuestion();
     });
 }
 

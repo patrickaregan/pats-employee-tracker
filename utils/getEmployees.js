@@ -5,11 +5,12 @@ const getEmployees = (db) => {
                     b.title as Job_Title,
                     c.name as Department,
                     b.salary as Salary,
-                    a.manager_id as Manager_ID
+                    concat(d.first_name, ' ', d.last_name) as Manager
                 FROM employee a
                     LEFT JOIN role b on a.role_id = b.id
                     LEFT JOIN department c on b.department_id = c.id
-                ORDER BY a.id`;
+                    LEFT JOIN employee d on a.manager_id = d.id
+                ORDER BY a.last_name`;
     db.query (sql, (err, rows) => {
         if (err) {
             console.log("Error getting Employees");

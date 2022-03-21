@@ -1,6 +1,6 @@
 const returnDepartmentList = (db) => {
     let result = [];
-    const sql = "SELECT concat (id, '. ', name) as department FROM department";
+    const sql = "SELECT concat (id, '. ', name) as department FROM department ORDER BY name";
     db.query (sql, (err, rows) => {
         if (err) {
             console.log("Error getting Departments");

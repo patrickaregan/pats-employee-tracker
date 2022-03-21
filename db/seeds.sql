@@ -32,5 +32,12 @@ UPDATE employee SET manager_id = 1 WHERE id = 2;
 UPDATE employee SET manager_id = 4 WHERE id = 5;
 
 -- Department to add: Executive
--- Roles to add: CEO, CFO
--- Employees to add: 
+-- Roles to add: CEO 300K, CFO 250K
+-- Employees to add: CFO - Warren Buffet, CEO - Bill Gates
+
+-- Roles to add: Analyst, 85000
+-- Employees to add: CFO - Warren Buffet, CEO - Bill Gates
+
+-- Department to add: Facilities, 55K
+-- Roles to add: Custodian
+-- Employees to add: Custodian - Joe Dirt

@@ -3,7 +3,7 @@ const addRole = (db, role_title, role_salary, role_department_id) => {
     const params = [ role_title, role_salary, role_department_id ]
     db.query (sql, params, (err, rows) => {
         if (err) {
-            console.log("Error adding Role");
+            console.log("Error adding Role!");
             return;
         }
         console.log("Role added successfully!");
