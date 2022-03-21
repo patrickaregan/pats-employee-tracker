@@ -7,7 +7,9 @@ const updateEmployeeRole = (db, update_employee_id, update_employee_role_id) => 
             console.log(err);
             return;
         }
+        console.log("\n");
         console.log("Role updated successfully!");
+        console.log("\n");
         return;
     })
 }

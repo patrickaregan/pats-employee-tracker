@@ -9,7 +9,9 @@ const addEmployee = (db, employee_fn, employee_ln, employee_role_id, employee_ma
             console.log("Error adding Employee!");
             return;
         }
+        console.log("\n");
         console.log("Employee added successfully!");
+        console.log("\n");
         return;
     })
 }

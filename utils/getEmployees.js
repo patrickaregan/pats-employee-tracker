@@ -1,3 +1,5 @@
+const cTable = require('console.table');
+
 const getEmployees = (db) => {
     const sql = `SELECT a.id as ID,
                     a.first_name as First_Name,
@@ -16,10 +18,13 @@ const getEmployees = (db) => {
             console.log("Error getting Employees");
             return;
         }
+        console.log("\n\n");
+        console.log("###############");
+        console.log("## EMPLOYEES ##");
+        console.log("###############");
         console.log("\n");
-        console.log("Employees:");
         console.table(rows);
-        console.log("\n");
+        console.log("\n\n");
     })
     return;
 }

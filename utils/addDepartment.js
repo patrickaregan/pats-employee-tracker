@@ -6,7 +6,9 @@ const addDepartment = (db, department_name) => {
             console.log("Error adding Department!");
             return;
         }
+        console.log("\n");
         console.log("Department added successfully!");
+        console.log("\n");
         return;
     })
 }

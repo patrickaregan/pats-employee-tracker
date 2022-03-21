@@ -6,7 +6,9 @@ const addRole = (db, role_title, role_salary, role_department_id) => {
             console.log("Error adding Role!");
             return;
         }
+        console.log("\n");
         console.log("Role added successfully!");
+        console.log("\n");
         return;
     })
 }
