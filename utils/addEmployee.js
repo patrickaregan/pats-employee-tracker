@@ -7,7 +7,6 @@ const addEmployee = (db, employee_fn, employee_ln, employee_role_id, employee_ma
     db.query (sql, params, (err, rows) => {
         if (err) {
             console.log("Error adding Employee!");
-            console.log(err);
             return;
         }
         console.log("Employee added successfully!");

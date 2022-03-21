@@ -10,7 +10,7 @@ const getEmployees = (db) => {
                     LEFT JOIN role b on a.role_id = b.id
                     LEFT JOIN department c on b.department_id = c.id
                     LEFT JOIN employee d on a.manager_id = d.id
-                ORDER BY a.last_name`;
+                ORDER BY a.first_name`;
     db.query (sql, (err, rows) => {
         if (err) {
             console.log("Error getting Employees");

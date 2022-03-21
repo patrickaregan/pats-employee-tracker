@@ -12,6 +12,8 @@ const returnRoleList = require('./utils/returnRoleList');
 const getEmployees = require('./utils/getEmployees');
 const addEmployee = require('./utils/addEmployee');
 const returnEmployeeList = require('./utils/returnEmployeeList');
+const returnExistingEmployeeList = require('./utils/returnExistingEmployeeList');
+const updateEmployeeRole = require('./utils/updateEmployeeRole');
 const { conditionalExpression } = require("@babel/types");
 // variables for adding a role
 let role_title = "";
@@ -22,6 +24,9 @@ let employee_fn = "";
 let employee_ln = "";
 let employee_role_id = "";
 let employee_manager_id = "";
+// variables for updating an employee's role
+let update_employee_id = "";
+let update_employee_role_id = "";
 
 
 // **************************************************
@@ -221,6 +226,54 @@ const setEmployeeManagerQuestion = () => {
 
 setEmployeeManagerQuestion();
 
+// Update Employee Role question 1
+var updateEmployeeRoleQuestion1 = [];
+
+const setUpdateEmployeeRoleQuestion1 = () => {
+    updateEmployeeRoleQuestion1 = [
+        {
+            type: "list",
+            name: "choice",
+            message: "Which employee's role do you want to update?",
+            choices: returnExistingEmployeeList(db),
+            validate: input => {
+                if (input) {
+                    return true;
+                } else {
+                    console.log("This is a required field!");
+                    return false;
+                }
+            }
+        }
+    ]
+}
+
+setUpdateEmployeeRoleQuestion1();
+
+// Update Employee Role question 2
+var updateEmployeeRoleQuestion2 = [];
+
+const setUpdateEmployeeRoleQuestion2 = () => {
+    updateEmployeeRoleQuestion2 = [
+        {
+            type: "list",
+            name: "choice",
+            message: "Which role do you want to assign to the selected employee?",
+            choices: returnRoleList(db),
+            validate: input => {
+                if (input) {
+                    return true;
+                } else {
+                    console.log("This is a required field!");
+                    return false;
+                }
+            }
+        }
+    ]
+}
+
+setUpdateEmployeeRoleQuestion2();
+
 
 
 // **************************************************
@@ -252,6 +305,9 @@ const optionsMenu = () => {
                 break;
             case "6":
                 getEmployeeFNMenu();
+                break;
+            case "7":
+                getUpdateEmployeeRoleMenu1();
                 break;
             case "8":
                 console.log("quitting...");
@@ -294,6 +350,7 @@ const getRoleDepartmentMenu = () => {
         addRole(db, role_title, role_salary, role_department_id);
         setTimeout(optionsMenu, 500);
         setEmployeeRoleQuestion();
+        setUpdateEmployeeRoleQuestion2();
     });
 }
 
@@ -328,8 +385,27 @@ const getEmployeeManagerMenu = () => {
         addEmployee(db, employee_fn, employee_ln, employee_role_id, employee_manager_id);
         setTimeout(optionsMenu, 500);
         setEmployeeManagerQuestion();
+        setUpdateEmployeeRoleQuestion1();
     });
 }
+
+// Get Update Employee Role Menu 1
+const getUpdateEmployeeRoleMenu1 = () => {
+    inquirer.prompt(updateEmployeeRoleQuestion1).then((answers) => {
+        update_employee_id = answers.choice.split(". ")[0];
+        getUpdateEmployeeRoleMenu2();
+    });
+}
+
+// Get Update Employee Role Menu 2
+const getUpdateEmployeeRoleMenu2 = () => {
+    inquirer.prompt(updateEmployeeRoleQuestion2).then((answers) => {
+        update_employee_role_id = answers.choice.split(". ")[0];
+        updateEmployeeRole(db, update_employee_id, update_employee_role_id);
+        setTimeout(optionsMenu, 500);
+    });
+}
+
 
 // **************************************************
 // Start the application
