@@ -12,7 +12,7 @@ const returnRoleList = require('./utils/returnRoleList');
 const getEmployees = require('./utils/getEmployees');
 const addEmployee = require('./utils/addEmployee');
 const returnEmployeeList = require('./utils/returnEmployeeList');
-const returnExisEmployeeList = require('./utils/returnExistingEmployeeList');
+const returnExistingEmployeeList = require('./utils/returnExistingEmployeeList');
 const updateEmployeeRole = require('./utils/updateEmployeeRole');
 const { conditionalExpression } = require("@babel/types");
 // variables for adding a role
